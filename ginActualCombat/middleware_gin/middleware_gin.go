@@ -13,9 +13,10 @@ func main() {
 	gin.DefaultErrorWriter = io.MultiWriter(f)
 
 	r := gin.New()
-	r.Use(gin.Logger(), gin.Recovery())
+	r.Use(gin.Logger(), gin.Recovery()) // 加装中间件
 	r.GET("/test_middleware", func(c *gin.Context) {
 		name := c.DefaultQuery("name", "default_name")
+		// panic("test panic") // 手动触发panic来看gin.recovery的作用
 		c.String(200, "%s", name)
 	})
 	r.Run()
